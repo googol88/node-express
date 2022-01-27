@@ -30,4 +30,9 @@ app.get('/now', (req, res, next) => {
   res.json({time: req.time})
 })
 
+// route parameters
+app.get('/:word/echo', (req, res) => {
+  res.json({echo: req.params.word})
+})
+
 module.exports = app
