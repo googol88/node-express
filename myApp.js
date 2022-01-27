@@ -1,5 +1,5 @@
-var express = require('express');
-var app = express();
+var express = require('express')
+var app = express()
 
 // Serve string
 // app.get("/", function(req, res) { res.send('Hello Express')})
@@ -18,38 +18,16 @@ app.get("/json", (req, res) => {
 
 // root-level logger middleware
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - ${req.ip}`);
-  next();
+  console.log(`${req.method} ${req.path} - ${req.ip}`)
+  next()
 })
 
 // chain middleware for time server
-app.get('/now', (req, res) => {
-  req.time = new Date().toString();
-  next();
-}),
+app.get('/now', (req, res, next) => {
+  req.time = new Date().toString()
+  next()
+}, (req, res) => {
+  res.json({time: req.time})
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
+module.exports = app
