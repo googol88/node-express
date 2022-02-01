@@ -1,4 +1,5 @@
 var express = require('express')
+var bodyParser = require('body-parser')
 var app = express()
 
 // Serve string
@@ -13,7 +14,7 @@ app.use('/public', express.static(__dirname + '/public'))
 
 // serve JSON at specific route
 app.get("/json", (req, res) => { 
-  res.json({"message": (process.env.MESSAGE_STYLE === 'uppercase' ? "HELLO JSON" : "Hello json")})
+  res.json({ "message": (process.env.MESSAGE_STYLE === 'uppercase' ? "HELLO JSON" : "Hello json") })
 })
 
 // root-level logger middleware
@@ -27,12 +28,21 @@ app.get('/now', (req, res, next) => {
   req.time = new Date().toString()
   next()
 }, (req, res) => {
-  res.json({time: req.time})
+  res.json({ time: req.time })
 })
 
 // route parameters
 app.get('/:word/echo', (req, res) => {
-  res.json({echo: req.params.word})
+  res.json({ echo: req.params.word })
 })
+
+// route queries
+app.get('/name', (req, res) => {
+  res.json({ name: req.query.first + ' ' + req.query.last })
+})
+
+
+
+// app.route('/name').get(handler).post(handler)
 
 module.exports = app
