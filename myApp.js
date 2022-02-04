@@ -1,6 +1,6 @@
-var express = require('express')
-var bodyParser = require('body-parser')
-var app = express()
+const express = require('express')
+const bodyParser = require('body-parser')
+const app = express()
 
 // Serve string
 // app.get("/", function(req, res) { res.send('Hello Express')})
@@ -23,6 +23,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// (11) Use body-parser to Parse POST Requests
+app.use(bodyParser.urlencoded({extended: false}))
+
 // chain middleware for time server
 app.get('/now', (req, res, next) => {
   req.time = new Date().toString()
@@ -40,7 +43,6 @@ app.get('/:word/echo', (req, res) => {
 app.get('/name', (req, res) => {
   res.json({ name: req.query.first + ' ' + req.query.last })
 })
-
 
 
 // app.route('/name').get(handler).post(handler)
